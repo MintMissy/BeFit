@@ -1,0 +1,51 @@
+@model BeFit.Models.TrainingSession
+
+@{
+    ViewData["Title"] = "Usuń sesję treningową";
+    var duration = Model.EndDateTime - Model.StartDateTime;
+}
+
+<h1>Usuń sesję treningową</h1>
+
+<h3>Czy na pewno chcesz usunąć tę sesję treningową?</h3>
+<div>
+    <h4>Sesja treningowa</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.StartDateTime)
+        </dt>
+        <dd class="col-sm-9">
+            @Model.StartDateTime.ToString("dd.MM.yyyy HH:mm")
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EndDateTime)
+        </dt>
+        <dd class="col-sm-9">
+            @Model.EndDateTime.ToString("dd.MM.yyyy HH:mm")
+        </dd>
+        <dt class="col-sm-3">
+            Czas trwania
+        </dt>
+        <dd class="col-sm-9">
+            @($"{(int)duration.TotalHours}h {duration.Minutes}min")
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+    </dl>
+    
+    <div class="alert alert-warning">
+        <strong>Uwaga!</strong> Usunięcie sesji treningowej spowoduje również usunięcie wszystkich powiązanych z nią rekordów ćwiczeń.
+    </div>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Usuń" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+    </form>
+</div>
+

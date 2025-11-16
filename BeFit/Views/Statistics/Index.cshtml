@@ -1,0 +1,80 @@
+@model IEnumerable<BeFit.Models.ExerciseStatistics>
+
+@{
+    ViewData["Title"] = "Moje statystyki treningowe";
+}
+
+<h1>Moje statystyki treningowe</h1>
+
+<div class="alert alert-info">
+    <strong>Okres statystyk:</strong> od @ViewData["StartDate"] do @ViewData["EndDate"] (ostatnie 4 tygodnie)
+</div>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExerciseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimesPerformed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalRepetitions)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AverageWeight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxWeight)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var stat in Model)
+    {
+            <tr>
+                <td>
+                    <strong>@stat.ExerciseName</strong>
+                </td>
+                <td>
+                    @stat.TimesPerformed
+                </td>
+                <td>
+                    @stat.TotalRepetitions
+                </td>
+                <td>
+                    @stat.AverageWeight.ToString("F2")
+                </td>
+                <td>
+                    @stat.MaxWeight.ToString("F2")
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    
+    <div class="mt-4">
+        <h5>Podsumowanie:</h5>
+        <ul>
+            <li>Łączna liczba różnych ćwiczeń: <strong>@Model.Count()</strong></li>
+            <li>Łączna liczba wykonań: <strong>@Model.Sum(s => s.TimesPerformed)</strong></li>
+            <li>Łączna liczba powtórzeń: <strong>@Model.Sum(s => s.TotalRepetitions)</strong></li>
+        </ul>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>Brak danych!</strong> Nie masz żadnych wykonanych ćwiczeń w ostatnich 4 tygodniach.
+        <br/>
+        <a asp-controller="TrainingSession" asp-action="Create" class="btn btn-primary mt-2">Dodaj sesję treningową</a>
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-controller="ExerciseRecord" asp-action="Index" class="btn btn-secondary">Zobacz wszystkie ćwiczenia</a>
+</div>
+

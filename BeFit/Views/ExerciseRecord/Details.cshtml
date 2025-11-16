@@ -1,0 +1,61 @@
+@model BeFit.Models.ExerciseRecord
+
+@{
+    ViewData["Title"] = "Szczegóły ćwiczenia";
+}
+
+<h1>Szczegóły wykonanego ćwiczenia</h1>
+
+<div>
+    <h4>@Model.ExerciseType.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            Data sesji treningowej
+        </dt>
+        <dd class="col-sm-9">
+            @Model.TrainingSession.StartDateTime.ToString("dd.MM.yyyy HH:mm")
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ExerciseType)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ExerciseType.Name)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Weight) kg
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Sets)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Sets)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Repetitions)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Repetitions)
+        </dd>
+        <dt class="col-sm-3">
+            Łączna liczba powtórzeń
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Sets * Model.Repetitions)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edytuj</a>
+    <a asp-action="Index" class="btn btn-secondary">Powrót do listy</a>
+</div>
+
